@@ -9,7 +9,7 @@ import (
 	"crypto/x509/pkix"
 	"encoding/pem"
 	"fmt"
-	"github.com/Liapoldus/pluginprotocol/v3/tests/support/fixture"
+	"github.com/Liapoldus/wool/v3/tests/support/fixture"
 	"math/big"
 	"net"
 	"net/url"

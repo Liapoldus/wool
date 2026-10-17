@@ -4,12 +4,12 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	"github.com/Liapoldus/pluginprotocol/v3/tests/support/fixture"
+	"github.com/Liapoldus/wool/v3/tests/support/fixture"
 	"io"
 	"os"
 	"time"
 
-	"github.com/Liapoldus/pluginprotocol/v3/presentation/peer"
+	"github.com/Liapoldus/wool/v3/presentation/peer"
 )
 
 func main() {

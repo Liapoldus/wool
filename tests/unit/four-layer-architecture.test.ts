@@ -15,7 +15,7 @@ async function packageSources(directory: string): Promise<string> {
   return files.join("\n");
 }
 
-describe("four-layer plugin protocol", () => {
+describe("four-layer Wool transport", () => {
   it("has exactly domain, application, infrastructure, and presentation roots", async () => {
     const entries = new Set(await readdir(root));
     for (const layer of layers) {
@@ -37,8 +37,8 @@ describe("four-layer plugin protocol", () => {
 
   it("keeps the public facade a presentation wrapper over application peer", async () => {
     const facade = await packageSources(`${root}/presentation/peer`);
-    expect(facade).toMatch(/github\.com\/Liapoldus\/pluginprotocol\/v3\/application\/peer/);
-    expect(facade).toMatch(/github\.com\/Liapoldus\/pluginprotocol\/v3\/domain\/peer/);
+    expect(facade).toMatch(/github\.com\/Liapoldus\/wool\/v3\/application\/peer/);
+    expect(facade).toMatch(/github\.com\/Liapoldus\/wool\/v3\/domain\/peer/);
     // Choosing a carrier from a consumer's config is the facade's job, so it may reach
     // into infrastructure. What it may not do is re-export generated wire types, which
     // would put a generated contract into the public API surface; the assertion below

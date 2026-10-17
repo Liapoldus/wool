@@ -1,8 +1,8 @@
-// Package peer is the public API of the generic plugin protocol.
+// Package peer is the public API of the generic Wool transport.
 //
 // It exposes exactly four operations: register methods, serve them, call them and
 // open a stream. Method names, payloads and authorization are supplied by the
-// consumer; this package defines none of them and owns no plugin lifecycle.
+// consumer; this package defines none of them and owns no service lifecycle.
 //
 // A consumer chooses a carrier and a security profile here, and nothing else
 // changes: the same registered methods, the same payload contracts and the same
@@ -12,8 +12,8 @@ package peer
 
 import (
 	"context"
-	"github.com/Liapoldus/pluginprotocol/v3/application/peer"
-	domain "github.com/Liapoldus/pluginprotocol/v3/domain/peer"
+	"github.com/Liapoldus/wool/v3/application/peer"
+	domain "github.com/Liapoldus/wool/v3/domain/peer"
 )
 
 // Carrier names the physical transport a client or server speaks.

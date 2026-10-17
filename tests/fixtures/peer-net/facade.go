@@ -5,14 +5,14 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"github.com/Liapoldus/pluginprotocol/v3/tests/support/fixture"
+	"github.com/Liapoldus/wool/v3/tests/support/fixture"
 	"io"
 	"os"
 	"path/filepath"
 	"time"
 
-	domainpeer "github.com/Liapoldus/pluginprotocol/v3/domain/peer"
-	publicpeer "github.com/Liapoldus/pluginprotocol/v3/presentation/peer"
+	domainpeer "github.com/Liapoldus/wool/v3/domain/peer"
+	publicpeer "github.com/Liapoldus/wool/v3/presentation/peer"
 )
 
 // facadeProbe exercises the public API end to end in one process: it builds a
@@ -20,7 +20,7 @@ import (
 // bidirectional stream over the selected carrier and profile.
 //
 // The scenario suite already covers the wire protocol through the lower layers. This
-// probe covers the facade itself, which is the surface a plugin actually imports, so
+// probe covers the facade itself, which is the surface a service actually imports, so
 // that "the public API works over every supported carrier" is an assertion rather
 // than an assumption.
 func facadeProbe(args []string) error {

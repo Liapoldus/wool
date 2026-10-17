@@ -155,17 +155,19 @@ describe("removed legacy surface", () => {
     expect((await readdir(`${root}/tests/fixtures`)).sort()).toEqual(["peer-net", "peer-router", "revocation-security", "stream-half-close", "stream-terminal-drain", "windows-pipe"]);
   });
 
-  it("does not import the Plugin SDK or any legacy root anywhere", async () => {
+  it("does not import the Service SDK or any legacy root anywhere", async () => {
     const forbidden = [
+      "github.com/Liapoldus/service-sdk",
       "github.com/Liapoldus/plugin-sdk",
-      '"github.com/Liapoldus/pluginprotocol/pluginv1"',
-      '"github.com/Liapoldus/pluginprotocol/contracts"',
-      '"github.com/Liapoldus/pluginprotocol/presentation/sdk"',
-      '"github.com/Liapoldus/pluginprotocol/domain"',
-      '"github.com/Liapoldus/pluginprotocol/application"',
-      '"github.com/Liapoldus/pluginprotocol/infrastructure/transport"',
-      '"github.com/Liapoldus/pluginprotocol/infrastructure/grpc"',
-      '"github.com/Liapoldus/pluginprotocol/infrastructure/contracts"',
+      "github.com/Liapoldus/pluginprotocol",
+      '"github.com/Liapoldus/wool/pluginv1"',
+      '"github.com/Liapoldus/wool/contracts"',
+      '"github.com/Liapoldus/wool/presentation/sdk"',
+      '"github.com/Liapoldus/wool/domain"',
+      '"github.com/Liapoldus/wool/application"',
+      '"github.com/Liapoldus/wool/infrastructure/transport"',
+      '"github.com/Liapoldus/wool/infrastructure/grpc"',
+      '"github.com/Liapoldus/wool/infrastructure/contracts"',
     ];
     const offenders: string[] = [];
     for (const file of await goFiles(root)) {
@@ -298,8 +300,8 @@ describe("consumer documentation", () => {
 
   it("keeps the guide on the facade and off the layers below it", async () => {
     const guide = await readFile(`${root}/docs/consumer-guide.md`, "utf8");
-    expect(guide).toContain('import publicpeer "github.com/Liapoldus/pluginprotocol/v3/presentation/peer"');
-    for (const layer of ["pluginprotocol/domain", "pluginprotocol/application", "pluginprotocol/infrastructure", "pluginprotocol/pluginv1"]) {
+    expect(guide).toContain('import publicpeer "github.com/Liapoldus/wool/v3/presentation/peer"');
+    for (const layer of ["wool/domain", "wool/application", "wool/infrastructure", "wool/pluginv1"]) {
       expect(guide, `the guide must not send a consumer into ${layer}`).not.toContain(layer);
     }
   });
@@ -308,13 +310,13 @@ describe("consumer documentation", () => {
     const guide = await readFile(`${root}/docs/consumer-guide.md`, "utf8");
     expect(guide).toContain("tests/fixtures/peer-net/facade.go");
     const fixture = await readFile(`${root}/tests/fixtures/peer-net/facade.go`, "utf8");
-    expect(fixture).toContain("pluginprotocol/v3/presentation/peer");
+    expect(fixture).toContain("wool/v3/presentation/peer");
   });
 
   it("states what the library does not own", async () => {
     const guide = await readFile(`${root}/docs/consumer-guide.md`, "utf8");
     expect(guide).toContain("What this library does not do");
-    for (const excluded of ["Core", "Reload", "lifecycle", "plugin-sdk"]) {
+    for (const excluded of ["Core", "Reload", "lifecycle", "service-sdk"]) {
       expect(guide, `the guide must record ${excluded} as out of scope`).toContain(excluded);
     }
   });

@@ -1,4 +1,4 @@
-module github.com/Liapoldus/pluginprotocol/v3
+module github.com/Liapoldus/wool/v3
 
 go 1.24.1
 

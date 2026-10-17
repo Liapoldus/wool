@@ -5,19 +5,19 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"github.com/Liapoldus/pluginprotocol/v3/tests/support/fixture"
+	"github.com/Liapoldus/wool/v3/tests/support/fixture"
 	"io"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
 
-	"github.com/Liapoldus/pluginprotocol/v3/application/peer"
-	domainpeer "github.com/Liapoldus/pluginprotocol/v3/domain/peer"
+	"github.com/Liapoldus/wool/v3/application/peer"
+	domainpeer "github.com/Liapoldus/wool/v3/domain/peer"
 )
 
 // hub is the mixed-placement probe: one operating-system process that listens on
-// its own address while dialing another. A plugin process that is simultaneously
+// its own address while dialing another. A service process that is simultaneously
 // an endpoint and a caller is how a processor hosts a small mesh over the local
 // carriers, so conformance has to prove the two roles share one process on the
 // same carrier without either side interfering with the other.

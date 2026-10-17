@@ -5,7 +5,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/Liapoldus/pluginprotocol/v3/tests/support/fixture"
+	"github.com/Liapoldus/wool/v3/tests/support/fixture"
 	"io"
 	"os"
 	"os/signal"
@@ -13,8 +13,8 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/Liapoldus/pluginprotocol/v3/application/peer"
-	domainpeer "github.com/Liapoldus/pluginprotocol/v3/domain/peer"
+	"github.com/Liapoldus/wool/v3/application/peer"
+	domainpeer "github.com/Liapoldus/wool/v3/domain/peer"
 )
 
 const secret = "secret-value-must-not-leak"

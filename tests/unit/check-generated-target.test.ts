@@ -24,6 +24,7 @@ describe("generated source check target", () => {
     const makefile = readFileSync(`${root}/Makefile`, "utf8");
 
     expect(makefile).not.toContain("liapoldus/plugin");
+    expect(makefile).not.toContain("liapoldus/service");
     expect(makefile).not.toContain("--ts_proto_out");
     expect(makefile).not.toContain("--go-grpc_out");
     expect(makefile).not.toMatch(/generate-ts/);

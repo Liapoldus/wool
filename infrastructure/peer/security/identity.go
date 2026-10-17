@@ -8,7 +8,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/Liapoldus/pluginprotocol/v3/domain/peer"
+	"github.com/Liapoldus/wool/v3/domain/peer"
 )
 
 // ErrNoPeerIdentity reports a peer that presented no usable URI SAN. A peer that
@@ -64,7 +64,7 @@ func PeerIdentityOf(state tls.ConnectionState) (peer.PeerIdentity, error) {
 //
 // A profile with no pin accepts any peer that chains to its trust anchors. A
 // profile with a pin refuses a peer that authenticated as anything else, which is
-// what stops a valid certificate for the wrong plugin from being accepted.
+// what stops a valid certificate for the wrong service from being accepted.
 func (profile *Profile) VerifyPeer(state tls.ConnectionState) (peer.PeerIdentity, error) {
 	pin := ""
 	if profile != nil {

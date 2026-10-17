@@ -7,17 +7,19 @@ Go module major `v3` отражает несовместимую замену п
 `liapoldus.peer.v1`; import path Go module —
 `github.com/Liapoldus/pluginprotocol/v3`.
 
-## Unreleased — generic plugin-to-plugin library
+## Unreleased — Wool service-to-service transport
 
-Breaking: модуль приведён к целевой generic библиотеке. Удалён весь legacy
-lifecycle/product API — gRPC-транспорт (`infrastructure/{grpc,transport}`),
-`pluginv1`, `presentation/sdk`, embedded `contracts/`, `compatibility/`,
-control/plugin proto и соответствующие fixtures/tests. Единственный wire
-contract — `liapoldus.peer.v1`; carrier v1 — TCP и QUIC, remote-соединение
-только authenticated mTLS без downgrade. Публичный API — `presentation/peer`
+Breaking: модуль выпускается как `github.com/Liapoldus/wool/v3` и предоставляет
+только generic transport для прямой связи независимых Services. Lifecycle,
+configuration и REST control plane принадлежат Core и независимому Service SDK;
+Wool не проксирует вызовы и не задаёт продуктовые методы. Точные previous names,
+удалённые пути и заменяющие владельцы перечислены в
+[карте миграции](/wool/migration). Единственный wire contract —
+`liapoldus.peer.v1`; carrier v1 — TCP и QUIC, remote-соединение только
+authenticated mTLS без downgrade. Публичный API — `presentation/peer`
 (registration, call, listen, bidirectional stream, consumer-supplied authorizer).
-`go.mod` оставляет только `quic-go` и `protobuf`. Миграция внешних consumers
-принадлежит их репозиториям.
+`go.mod` оставляет только `quic-go` и `protobuf`. Внешние consumers обновляют
+импорты в собственных репозиториях.
 
 Добавлено в рамках этого же релиза:
 

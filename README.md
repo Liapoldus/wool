@@ -1,12 +1,18 @@
-# Liapoldus Plugin Protocol
+# Liapoldus Wool
+
+Control plane: Studio → CLI → Core → Service SDK REST. Независимые Services
+общаются через Wool в data plane; StudioPlugins — только расширения редактора.
+Go module остаётся `v3`, Service SDK — `github.com/Liapoldus/service-sdk/v2`.
+Карта breaking-перехода и неизменяемых контрактов — в
+[docs/migration.md](docs/migration.md).
 
 Текущая Go-библиотека выпускается как module major `v3` по правилам Go
 SemVer: её Go API несовместим с legacy module `v1.0.0`. Это версия Go module,
 а не wire-протокола: сетевой контракт остаётся `liapoldus.peer.v1`. Импорты
-текущей библиотеки используют путь `github.com/Liapoldus/pluginprotocol/v3/...`.
+текущей библиотеки используют путь `github.com/Liapoldus/wool/v3/...`.
 
-`pluginprotocol` — независимая Go-библиотека для generic коммуникации между
-плагинами. Потребитель сам регистрирует методы, payloads и их прикладной смысл;
+`wool` — независимая Go-библиотека для generic коммуникации между
+сервисами. Потребитель сам регистрирует методы, payloads и их прикладной смысл;
 библиотека предоставляет только registration/invocation, listener и stream
 primitives, транспорт и сетевую защиту.
 
@@ -24,8 +30,8 @@ Linux/macOS и named pipes для Windows; каждый проходит оди�
 набор conformance, поэтому смена carrier не ослабляет peer authentication,
 encryption, authorization, cancellation, deadlines, flow control или stream
 семантику. Единый wire contract — `liapoldus.peer.v1`; он переносит только opaque
-method name и opaque payload. `pluginprotocol` владеет TLS/mTLS handshake,
-проверкой peer identity и revocation; plugins только выбирают профиль и
+method name и opaque payload. `wool` владеет TLS/mTLS handshake,
+проверкой peer identity и revocation; services только выбирают профиль и
 передают credentials через API библиотеки, не реализуя TLS самостоятельно.
 Remote- и production-соединения требуют mTLS. Явный plaintext разрешён только
 для TCP loopback в development и не удостоверяет peer. QUIC всегда шифрует
@@ -42,13 +48,13 @@ profile. Пошаговый разбор для потребителя — в
 
 ## Явно вне владения библиотеки
 
-Библиотека не знает Core, plugin lifecycle, settings, `Reload`, config pull,
+Библиотека не знает Core, service lifecycle, settings, `Reload`, config pull,
 rollback, Manifest, health/readiness, logging/metrics endpoints и capabilities
-или contracts конкретных продуктов. Core↔plugin REST lifecycle и общие
-инструменты плагина принадлежат отдельному `plugin-sdk/`. Product methods,
-schemas, ошибки и conformance vectors принадлежат репозиториям плагинов.
+или contracts конкретных продуктов. Core↔service REST lifecycle и общие
+инструменты сервиса принадлежат отдельному `service-sdk/`. Product methods,
+schemas, ошибки и conformance vectors принадлежат репозиториям сервисов.
 
-Подробный backlog и критерий готовности находятся в [TODO.md](https://github.com/Liapoldus/pluginprotocol/blob/main/TODO.md).
+Подробный backlog и критерий готовности находятся в [TODO.md](https://github.com/Liapoldus/wool/blob/main/TODO.md).
 
 Потребитель, который использовал удалённые lifecycle, grant или gRPC API,
 начинает миграцию с [docs/migration.md](docs/migration.md): там перечислены
@@ -78,7 +84,7 @@ conformance gate; это не должно добавлять продуктов
 
 ## Release integrity
 
-Каждый `pluginprotocol-v3.*` release публикуется только release workflow после
+Каждый `wool-v3.*` release публикуется только release workflow после
 проверки сгенерированного wire-кода, Go/TypeScript conformance и `go vet`.
 Workflow создаёт source artifact, SPDX SBOM, keyless Sigstore bundles для
 artifact и SBOM и GitHub build-provenance attestation. Потребитель обязан

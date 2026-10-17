@@ -1,9 +1,9 @@
-// Package peer defines the transport-neutral model for plugin-to-plugin calls
+// Package peer defines the transport-neutral model for service-to-service calls
 // and bidirectional streams.
 //
 // The model deliberately owns no lifecycle, configuration, grant, readiness or
 // product vocabulary. Method names, payload schemas and their meaning are
-// supplied by the plugins that use this library, so the same registered
+// supplied by the services that use this library, so the same registered
 // surface behaves identically on every supported carrier.
 package peer
 
@@ -48,7 +48,7 @@ type Message struct {
 	Payload []byte
 }
 
-// Stream is one bidirectional method invocation between two plugins.
+// Stream is one bidirectional method invocation between two services.
 type Stream interface {
 	// Context is cancelled when the caller cancels, the invocation deadline
 	// expires, or the underlying connection is lost.

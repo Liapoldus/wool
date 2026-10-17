@@ -3,7 +3,7 @@ name: release
 on:
   push:
     tags:
-      - "pluginprotocol-v3.*"
+      - "wool-v3.*"
       - "v3.*"
 
 permissions:
@@ -23,43 +23,42 @@ jobs:
           go-version-file: go.mod
       - name: Verify module and tests
         run: |
-          test "$(sed -n '1p' go.mod)" = "module github.com/Liapoldus/pluginprotocol/v3"
+          test "$(sed -n '1p' go.mod)" = "module github.com/Liapoldus/wool/v3"
           go test ./...
           go vet ./...
       - name: Package source artifact
+        id: release_version
         env:
           VERSION: ${{ github.ref_name }}
         run: |
-          version="${VERSION#pluginprotocol-}"
-          artifact="pluginprotocol-${version}.tar.gz"
-          git archive --format=tar --prefix="pluginprotocol-${version}/" "${GITHUB_SHA}" | gzip -n > "${artifact}"
+          version="${VERSION#wool-}"
+          echo "version=${version}" >> "${GITHUB_OUTPUT}"
+          artifact="wool-${version}.tar.gz"
+          git archive --format=tar --prefix="wool-${version}/" "${GITHUB_SHA}" | gzip -n > "${artifact}"
           sha256sum "${artifact}" > "${artifact}.sha256"
       - name: Generate SPDX SBOM
         uses: anchore/sbom-action@v0
         with:
           path: .
           format: spdx-json
-          output-file: protocol-${{ github.ref_name }}.sbom.spdx.json
+          output-file: wool-${{ steps.release_version.outputs.version }}.sbom.spdx.json
       - name: Install Cosign
         uses: sigstore/cosign-installer@v3.8.1
       - name: Sign release artifact and SBOM
         env:
-          VERSION: ${{ github.ref_name }}
+          WOOL_VERSION: ${{ steps.release_version.outputs.version }}
         run: |
-          version="${VERSION#pluginprotocol-}"
-          artifact="pluginprotocol-${version}.tar.gz"
-          sbom="protocol-${VERSION}.sbom.spdx.json"
+          artifact="wool-${WOOL_VERSION}.tar.gz"
+          sbom="wool-${WOOL_VERSION}.sbom.spdx.json"
           cosign sign-blob --yes --bundle "${artifact}.sigstore.json" "${artifact}"
           cosign sign-blob --yes --bundle "${sbom}.sigstore.json" "${sbom}"
       - name: Attest release provenance
         uses: actions/attest-build-provenance@v2
         with:
-          subject-path: pluginprotocol-*.tar.gz
+          subject-path: wool-*.tar.gz
       - name: Publish release
         uses: softprops/action-gh-release@v2
         with:
           generate_release_notes: true
           files: |
-            pluginprotocol-*
-            protocol-${{ github.ref_name }}.sbom.spdx.json
-            protocol-${{ github.ref_name }}.sbom.spdx.json.sigstore.json
+            wool-*

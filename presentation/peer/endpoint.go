@@ -8,12 +8,12 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/Liapoldus/pluginprotocol/v3/domain/peer"
-	pipecarrier "github.com/Liapoldus/pluginprotocol/v3/infrastructure/peer/pipe"
-	"github.com/Liapoldus/pluginprotocol/v3/infrastructure/peer/quic"
-	"github.com/Liapoldus/pluginprotocol/v3/infrastructure/peer/security"
-	"github.com/Liapoldus/pluginprotocol/v3/infrastructure/peer/tcp"
-	unixcarrier "github.com/Liapoldus/pluginprotocol/v3/infrastructure/peer/unix"
+	"github.com/Liapoldus/wool/v3/domain/peer"
+	pipecarrier "github.com/Liapoldus/wool/v3/infrastructure/peer/pipe"
+	"github.com/Liapoldus/wool/v3/infrastructure/peer/quic"
+	"github.com/Liapoldus/wool/v3/infrastructure/peer/security"
+	"github.com/Liapoldus/wool/v3/infrastructure/peer/tcp"
+	unixcarrier "github.com/Liapoldus/wool/v3/infrastructure/peer/unix"
 )
 
 // NetworkConfig says which carrier a deployment uses. It is a deployment choice,

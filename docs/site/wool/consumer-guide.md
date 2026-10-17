@@ -1,9 +1,9 @@
 # Consumer guide
 
-How a plugin uses `pluginprotocol`. The whole public surface is one package:
+How a service uses `wool`. The whole public surface is one package:
 
 ```go
-import publicpeer "github.com/Liapoldus/pluginprotocol/v3/presentation/peer"
+import publicpeer "github.com/Liapoldus/wool/v3/presentation/peer"
 ```
 
 Everything below is generic: method names, payloads, authorization policy and
@@ -182,7 +182,7 @@ claimed as supported until that suite passes for it.
 
 ## 7. Security profiles
 
-TLS/mTLS — инфраструктура `pluginprotocol`, а не код отдельного plugin. Plugin
+TLS/mTLS — инфраструктура `wool`, а не код отдельного service. Service
 выбирает объявленный профиль и передаёт credentials библиотеке; он не создаёт
 собственный `tls.Config`, TLS listener или handshake. Для production и любого
 remote peer требуется mTLS независимо от того, выбран TCP или QUIC. Plaintext
@@ -192,7 +192,7 @@ remote peer требуется mTLS независимо от того, выбр
 mTLS не является поводом автоматически повторить соединение без TLS.
 Payload протокола opaque: библиотека не знает, содержит ли он секреты или иные
 чувствительные данные, и не может фильтровать их по содержимому. Поэтому
-вызывающий plugin обязан ограничить plaintext-профиль только несекретным
+вызывающий service обязан ограничить plaintext-профиль только несекретным
 локальным development-трафиком; прикладные credentials и чувствительные
 payloads разрешены только через аутентифицированное соединение с mTLS.
 
@@ -219,22 +219,22 @@ frame is refused and the session is dropped; it never takes the endpoint down.
 
 ## 9. What this library does not do
 
-It knows nothing about Core, plugin lifecycle, configuration distribution,
+It knows nothing about Core, service lifecycle, configuration distribution,
 `Reload`, health, readiness, install, metrics, logs, or any product capability.
-The Core↔plugin REST boundary and the shared plugin tooling belong to the separate
-`plugin-sdk/` module. Product methods, schemas, error taxonomies and their
-conformance vectors belong to the plugin's own repository. Method names used in
+The Core↔service REST boundary and the shared service tooling belong to the separate
+`service-sdk/` module. Product methods, schemas, error taxonomies and their
+conformance vectors belong to the service's own repository. Method names used in
 this guide (`demo.*`) are placeholders for names you own.
 
 ## Локальные carriers v3
 
 К TCP и QUIC добавлены Unix domain sockets для Linux/macOS и Windows named pipes
-для plugin-процессов на одном Windows host. Unix endpoint имеет форму
+для service-процессов на одном Windows host. Unix endpoint имеет форму
 `unix:///absolute/path`, а `ServerName` явно задаёт DNS SAN сертификата.
 Named pipe выбирается как `CarrierPipe` с endpoint `\\.\pipe\name`;
 его ACL ограничен текущей Windows identity процесса и SYSTEM. Оба локальных
 carrier входят в production matrix после прохождения native release gates. Carrier выбирается
-явным правилом caller→target, которое plugin получает через Plugin SDK
+явным правилом caller→target, которое service получает через Service SDK
 peer-directory; библиотека не читает Core policy и не выбирает другой carrier
 при ошибке. Правила `same-placement` и `remote` могут сосуществовать для одной
 пары, но каждое отдельно называет endpoint и carrier. Socket-only вызов без
@@ -262,12 +262,12 @@ rollback CRL number, изменение набора issuers или снятие
 проверяет fencing до вызова handler на QUIC/Unix и, в native Windows CI, на
 named pipe. Windows container/named-pipe совместное размещение не объявляется
 поддерживаемым до отдельной платформенной проверки.
-Несколько plugins в одном Pod используют общий volume для Unix socket, а не
+Несколько services в одном Pod используют общий volume для Unix socket, а не
 прямые Go-вызовы или ослабление trust boundary.
 
-Это не добавляет в `pluginprotocol` регистрацию replicas, leases, Core REST,
-rollout weights или продуктовые контракты: ими владеют Core, Plugin SDK и
-конкретные plugins. V2 conformance повторяет generic corpus для TCP, QUIC,
+Это не добавляет в `wool` регистрацию replicas, leases, Core REST,
+rollout weights или продуктовые контракты: ими владеют Core, Service SDK и
+конкретные services. V2 conformance повторяет generic corpus для TCP, QUIC,
 Unix sockets и Windows named pipes, включая отказ сертификата, revocation,
 no fallback, close races и bounded streams.
 

@@ -1,5 +1,5 @@
 // Package peer implements the generic registration and dispatch use cases of
-// the plugin protocol library.
+// the Wool transport library.
 //
 // It resolves consumer-defined methods to their handlers and enforces the
 // bounded concurrency budget that provides the library's backpressure. It
@@ -10,7 +10,7 @@ import (
 	"sort"
 	"sync"
 
-	"github.com/Liapoldus/pluginprotocol/v3/domain/peer"
+	"github.com/Liapoldus/wool/v3/domain/peer"
 )
 
 // Registry maps consumer-defined methods to the handlers that serve them.

@@ -2,10 +2,10 @@ syntax = "proto3";
 
 package liapoldus.peer.v1;
 
-option go_package = "github.com/Liapoldus/pluginprotocol/v3/infrastructure/peer/wire;wire";
+option go_package = "github.com/Liapoldus/wool/v3/infrastructure/peer/wire;wire";
 
-// This is the generic plugin-to-plugin wire contract. It carries only an opaque
-// method name and an opaque payload: it defines no plugin lifecycle, no
+// This is the generic service-to-service wire contract. It carries only an opaque
+// method name and an opaque payload: it defines no service lifecycle, no
 // configuration distribution, no authorization grant and no product vocabulary.
 // Method names, payload contracts and access policy are supplied by the
 // consumer that embeds this library.

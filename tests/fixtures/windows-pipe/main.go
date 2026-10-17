@@ -8,15 +8,15 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"github.com/Liapoldus/pluginprotocol/v3/tests/support/fixture"
+	"github.com/Liapoldus/wool/v3/tests/support/fixture"
 	"io"
 	"os"
 	"os/signal"
 	"path/filepath"
 	"time"
 
-	"github.com/Liapoldus/pluginprotocol/v3/domain/peer"
-	publicpeer "github.com/Liapoldus/pluginprotocol/v3/presentation/peer"
+	"github.com/Liapoldus/wool/v3/domain/peer"
+	publicpeer "github.com/Liapoldus/wool/v3/presentation/peer"
 )
 
 const (

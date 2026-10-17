@@ -1,9 +1,9 @@
 # Consumer guide
 
-How a plugin uses `pluginprotocol`. The whole public surface is one package:
+How a service uses `wool`. The whole public surface is one package:
 
 ```go
-import publicpeer "github.com/Liapoldus/pluginprotocol/v3/presentation/peer"
+import publicpeer "github.com/Liapoldus/wool/v3/presentation/peer"
 ```
 
 Everything below is generic: method names, payloads, authorization policy and
@@ -272,11 +272,11 @@ frame is refused and the session is dropped; it never takes the endpoint down.
 
 ## 9. What this library does not do
 
-It knows nothing about Core, plugin lifecycle, configuration distribution,
+It knows nothing about Core, service lifecycle, configuration distribution,
 `Reload`, health, readiness, install, metrics, logs, or any product capability.
-The Core↔plugin REST boundary and the shared plugin tooling belong to the separate
-`plugin-sdk/` module. Product methods, schemas, error taxonomies and their
-conformance vectors belong to the plugin's own repository. Method names used in
+The Core↔service REST boundary and the shared service tooling belong to the separate
+`service-sdk/` module. Product methods, schemas, error taxonomies and their
+conformance vectors belong to the service's own repository. Method names used in
 this guide (`demo.*`) are placeholders for names you own.
 
 ## 10. Foreign bindings outside v3
@@ -284,4 +284,4 @@ this guide (`demo.*`) are placeholders for names you own.
 Foreign bindings, C ABI and a second wire/session implementation are outside v3.
 The supported surface is the Go facade described above. Any future non-Go
 binding requires a separate versioned contract and native conformance gate;
-Core lifecycle REST remains owned by Plugin SDK.
+Core lifecycle REST remains owned by Service SDK.

@@ -671,7 +671,7 @@ describe("rejecting hostile framing without going down", () => {
   });
 });
 
-// The public facade is the surface a plugin actually imports. These tests run the
+// The public facade is the surface a service actually imports. These tests run the
 // lower-level scenario suite above through it, so "the API consumers use works over
 // every supported carrier and profile" is asserted rather than assumed.
 describe.each(COMBINATIONS)("public facade over $name", (combination) => {

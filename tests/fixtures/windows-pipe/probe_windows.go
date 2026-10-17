@@ -5,7 +5,7 @@ package main
 import (
 	"context"
 	"flag"
-	"github.com/Liapoldus/pluginprotocol/v3/tests/support/fixture"
+	"github.com/Liapoldus/wool/v3/tests/support/fixture"
 	"time"
 
 	winio "github.com/Microsoft/go-winio"

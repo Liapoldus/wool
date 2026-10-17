@@ -1,4 +1,46 @@
-# TODO — pluginprotocol
+# TODO — Wool
+
+## Breaking nomenclature migration — 2026-10-13
+
+Текущий module — `github.com/Liapoldus/wool/v3`, canonical site source —
+`docs/site/wool/`, runtime entities — Services. Wool владеет только peer
+transport; control plane Studio → CLI → Core → Service SDK REST независим.
+Service SDK `github.com/Liapoldus/service-sdk/v2` сохраняет major `v2`; wire
+namespace — `liapoldus.peer.v1`.
+Карта consumer imports и routes: [docs/migration.md](docs/migration.md).
+Никаких aliases или старых поддерживаемых маршрутов не добавляется.
+
+### Race-проверка текущего dirty worktree — 2026-10-15
+
+- [x] `PATH=tests/.tools/protoc-34.1/bin:$PATH GOTOOLCHAIN=go1.26.0
+  GOWORK=off GOFLAGS=-p=1 make check-race` прошёл полностью: generated-source
+  parity, `go test -race ./...` и 16 Vitest suites (198 passed / 9
+  platform skips); race-enabled child-process fixtures завершились за 194.60 s.
+- [ ] Hosted Linux/macOS/Windows gates для текущих незакоммиченных изменений
+  всё ещё не запускались; локальный macOS gate не закрывает platform skips.
+
+### Повторная локальная проверка — 2026-10-14
+
+- [x] Generated peer code воспроизводим: `protoc` + `safe-protobuf` + byte-for-byte
+  comparison с `infrastructure/peer/wire/peer.pb.go` прошли.
+- [x] Локальные quality gates пройдены: golangci-lint (0 issues), `go test ./...`,
+  16 Vitest suites (197 passed / 9 platform skips), `go vet ./...` и `go build`.
+- [x] `go test -race ./...` и `LIAPOLDUS_PEER_FIXTURE_GOFLAGS=-race npm test`
+  прошли: 16 suites, 197 passed / 9 platform skips.
+- [x] `make check` и `make check-race` пройдены end-to-end 2026-10-14 с
+  `PATH=tests/.tools/protoc-34.1/bin:$PATH`: pinned `protoc 34.1` обходит сломанный
+  Homebrew symlink Abseil без изменения системного toolchain. Generated-code
+  comparison, lint, Go tests, 16 Vitest suites (197 passed / 9 platform skips),
+  vet/build и race suites проходят; `make check-race` занял 195.82 s.
+- [ ] Hosted Linux/macOS/Windows gates для текущего dirty worktree не запускались;
+  девять platform scenarios остаются skipped на macOS.
+  Hosted Linux/macOS/Windows gates для текущего dirty worktree не запускались;
+  девять platform scenarios остаются skipped на macOS.
+
+Ниже сохранены прежние отчёты и backlog с историческими названиями и точными
+результатами. Они не подтверждают проверки текущей nomenclature migration.
+
+## Архив прежних отчётов и backlog
 
 ## Подготовительная чистка и quality gate — 2026-10-09
 
